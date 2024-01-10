@@ -1,23 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AiDistancePerception : AIPerception
 {
     public override GameObject[] GetGameObjects()
     {
-        return new GameObject[] { };
-    }
+		List<GameObject> result = new List<GameObject>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+		Collider[] colliders = Physics.OverlapSphere(transform.position, Distance);
+		foreach (Collider collider in colliders)
+		{
+			if (collider.gameObject == gameObject) continue;
+			if (TagName == "" || collider.CompareTag(TagName))
+			{
+				// calculate angle from transform forward vector to direction of game object
+				Vector3 direction = (collider.transform.position - transform.position).normalized;
+				float angle = Vector3.Angle(transform.forward, direction);
+				// if angle is less than max angle, add game object
+				if (angle <= MaxAngle)
+				{
+					result.Add(collider.gameObject);
+				}
+			}
+		}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		return result.ToArray();
+	}
 }

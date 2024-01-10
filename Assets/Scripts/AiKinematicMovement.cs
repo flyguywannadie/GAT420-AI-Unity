@@ -30,8 +30,6 @@ public class AiKinematicMovement : AIMovement
         
     }
 
-    
-
     void LateUpdate()
     {
         velocity += acceleration * Time.deltaTime;
