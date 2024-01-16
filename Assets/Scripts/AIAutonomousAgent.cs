@@ -42,7 +42,7 @@ public class AIAutonomousAgent : AIAgent
 			}
 		}
 
-		transform.position = Utilities.Wrap(transform.position, new Vector3(-10, -0.1f, -10), new Vector3(10, 0.1f, 10));
+		transform.position = Utilities.Wrap(transform.position, new Vector3(-20, -0.1f, -20), new Vector3(20, 0.1f, 20));
     }
 
     private Vector3 Seek(GameObject target)

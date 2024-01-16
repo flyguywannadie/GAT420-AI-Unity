@@ -138,7 +138,7 @@ MonoBehaviour:
   tagName:
   - Agent03
   distance: 10
-  maxAngle: 120
+  maxAngle: 180
 --- !u!1001 &1234373481092571214
 PrefabInstance:
   m_ObjectHideFlags: 0
