@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AIAutonomousAgent : AIAgent
@@ -7,6 +8,7 @@ public class AIAutonomousAgent : AIAgent
     public AIPerception seekPerception = null;
     public AIPerception fleePerception = null;
     public AIPerception flockPerception = null;
+    public AIPerception obsticalPerception = null;
 
 	private void Start()
 	{
@@ -14,9 +16,9 @@ public class AIAutonomousAgent : AIAgent
 	}
 
 	private void Update()
-    {
-        if (seekPerception != null)
-        {
+	{
+		if (seekPerception != null)
+		{
 			var gameObjects = seekPerception.GetGameObjects();
 			if (gameObjects.Length > 0)
 			{
@@ -28,7 +30,7 @@ public class AIAutonomousAgent : AIAgent
 			var gameObjects = fleePerception.GetGameObjects();
 			if (gameObjects.Length > 0)
 			{
-				movement.ApplyForce(Flee(gameObjects[0]));
+				movement.ApplyForce(Flee(gameObjects[0]) * 2);
 			}
 		}
 		if (flockPerception != null)
@@ -41,6 +43,22 @@ public class AIAutonomousAgent : AIAgent
 				movement.ApplyForce(Alignment(gameObjects));
 			}
 		}
+
+		if (obsticalPerception != null)
+		{
+			if (((AISphereCastPerception)obsticalPerception).CheckDirection(Vector3.forward))
+			{
+				Vector3 open = Vector3.zero;
+				if (((AISphereCastPerception)obsticalPerception).GetOpenDirection(ref open))
+				{
+					movement.ApplyForce(GetSteeringForce(open) * 5);
+				}
+			}
+		}
+
+		Vector3 acceleration = movement.acceleration;
+		acceleration.y = 0;
+		movement.acceleration = acceleration;
 
 		transform.position = Utilities.Wrap(transform.position, new Vector3(-20, -0.1f, -20), new Vector3(20, 0.1f, 20));
     }

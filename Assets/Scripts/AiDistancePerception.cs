@@ -9,7 +9,7 @@ public class AiDistancePerception : AIPerception
     {
 		List<GameObject> result = new List<GameObject>();
 
-		Collider[] colliders = Physics.OverlapSphere(transform.position, Distance);
+		Collider[] colliders = Physics.OverlapSphere(transform.position, Distance, LayerMask);
 		foreach (Collider collider in colliders)
 		{
 			if (collider.gameObject == gameObject) continue;
