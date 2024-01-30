@@ -11,13 +11,14 @@ public class AISphereCastPerception : AIPerception
 
 	public void OnDrawGizmos()
 	{
-		Vector3[] directions = Utilities.GetDirectionsInCircle(numRaycast, MaxAngle);
-		foreach (Vector3 direction in directions)
-		{
-			Ray ray = new Ray(transform.position, transform.rotation * direction);
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere(ray.origin + (ray.direction * Distance), radius);
-		}
+		//Vector3[] directions = Utilities.GetDirectionsInCircle(numRaycast, MaxAngle);
+		//foreach (Vector3 direction in directions)
+		//{
+		//	Ray ray = new Ray(transform.position, transform.rotation * direction);
+		//	Gizmos.color = Color.red;
+		//	Gizmos.DrawWireSphere(ray.origin + (ray.direction * Distance), radius);
+		//}
+		//test
 	}
 
     public override GameObject[] GetGameObjects()
@@ -43,8 +44,8 @@ public class AISphereCastPerception : AIPerception
 			}
 			else
 			{
-				Debug.DrawRay(ray.origin, ray.direction * Distance, Color.blue);
-			}
+                Debug.DrawRay(ray.origin, ray.direction * Distance, Color.blue);
+            }
 		}
 
 		return result.Distinct().ToList().ToArray();
@@ -58,13 +59,17 @@ public class AISphereCastPerception : AIPerception
 			// cast ray from transform position towards direction (use game object orientation)
 			Ray ray = new Ray(transform.position, transform.rotation * direction);
 			// if there is NO raycast hit then that is an open direction
-			if (!Physics.SphereCast(ray, radius, out RaycastHit raycastHit, Distance, LayerMask))
+			if (!Physics.Raycast(ray, out RaycastHit raycastHit, Distance, LayerMask))
 			{
-				Debug.DrawRay(ray.origin, ray.direction * Distance, Color.green);
+				Debug.DrawRay(ray.origin, ray.direction * raycastHit.distance, Color.green);
 				// set open direction
 				openDirection = ray.direction;
 				return true;
 			}
+			else
+			{
+                Debug.DrawRay(ray.origin, ray.direction * Distance, Color.blue);
+            }
 		}
 
 		// no open direction

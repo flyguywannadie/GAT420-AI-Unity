@@ -145,12 +145,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagName: []
   distance: 10
-  maxAngle: 45
+  maxAngle: 90
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  numRaycast: 10
-  radius: 2
+  numRaycast: 8
+  radius: 0.35
 --- !u!1001 &5037658269196297316
 PrefabInstance:
   m_ObjectHideFlags: 0
